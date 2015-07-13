@@ -18,15 +18,10 @@ feature 'User Sign Up' do
     expect(page).to have_content("Welcome, robathan")
   end
 
-  scenario 'A user can sign up ' do 
-    visit '/' 
+  scenario 'A user can sign up ' do
+    visit '/'
     click_button "Sign Up"
-    fill_in :name, with: 'Robathan Sagan'
-    fill_in :email, with:'jonabert@example.com' 
-    fill_in :username, with: 'Jonabert'
-    fill_in :password, with: 'oranges'
-    fill_in :password_confirmation, with:'oranges'
-    click_button 'Sign Up'
+    sign_up
     expect(page.status_code).to eq 200
     expect(page).to have_content("Welcome, Jonabert")
   end
@@ -34,42 +29,29 @@ feature 'User Sign Up' do
   scenario 'A user cannot sign up with an already registered username' do
     visit '/'
     click_button "Sign Up"
-    fill_in :name, with: 'Robathan Sagan'
-    fill_in :email, with:'jonabert@example.com' 
-    fill_in :username, with: 'Jonabert'
-    fill_in :password, with: 'oranges'
-    fill_in :password_confirmation, with:'oranges'
-    click_button 'Sign Up'
+    sign_up
     visit '/'
     click_button "Sign Up"
-    fill_in :name, with: 'Robathan Sagan'
-    fill_in :email, with:'jonabert@example.com' 
-    fill_in :username, with: 'Jonabert'
-    fill_in :password, with: 'oranges'
-    fill_in :password_confirmation, with:'oranges'
-    click_button "Sign Up"
-    expect(page).to have_content("Password or Email already registered")
+    sign_up
+    expect(page).to have_content("Username already registered")
   end
 
-scenario 'A user cannot sign up with an already registered email' do
+  scenario 'A user cannot sign up with an already registered email' do
     visit '/'
     click_button "Sign Up"
-    fill_in :name, with: 'Robathan Sagan'
-    fill_in :email, with:'jonabert@example.com' 
-    fill_in :username, with: 'Jonabert'
-    fill_in :password, with: 'oranges'
-    fill_in :password_confirmation, with:'oranges'
-    click_button 'Sign Up'
+    sign_up
     visit '/'
     click_button "Sign Up"
-    fill_in :name, with: 'Robathan Sagan'
-    fill_in :email, with:'jonabert@example.com' 
-    fill_in :username, with: 'Jonabert'
-    fill_in :password, with: 'oranges'
-    fill_in :password_confirmation, with:'oranges'
+    sign_up
+    expect(page).to have_content("Email already registered")
+  end
+
+  scenario 'Requires a matching password confirmation' do
+    visit '/'
     click_button "Sign Up"
-    expect(page).to have_content("Password or Email already registered")
-end
+    expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
+  end 
+
   # scenario 'A non-user cannot sign in' do
   #   visit '/'
   #    fill_in :username, with: 'jonabert'
@@ -78,4 +60,17 @@ end
   #   expect(page).to have_content("Unknown username or incorrect password")
   # end
 
+end
+
+def sign_up(name: 'Robathan Sagan',
+            email: 'jonabert@example.com',
+            username: 'Jonabert',
+            password: 'oranges',
+            password_confirmation: 'oranges')
+  fill_in :name, with: name
+  fill_in :email, with: email
+  fill_in :username, with: username
+  fill_in :password, with: password
+  fill_in :password_confirmation, with: password_confirmation
+  click_button 'Sign Up'
 end

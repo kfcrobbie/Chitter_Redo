@@ -30,13 +30,14 @@ class Chitter < Sinatra::Base
     @user = User.create(name: params[:name],
                         email: params[:email],
                         username: params[:username],
-                        password: params[:password])
+                        password: params[:password],
+                        password_confirmation: params[:password_confirmation])
     if @user.save
       session[:user] = @user.username
       @current_user = session[:user]
       redirect to('/user')
     else
-      flash.now[:notice] = "Password or Email already registered"
+      flash.now[:errors] = @user.errors.full_messages
       erb :'users/user' 
     end
 
