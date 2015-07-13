@@ -9,8 +9,8 @@ feature 'User Sign Up' do
 
 
   scenario 'A user can sign in' do
+    User.create(username: 'robathan', password: 'test') #User.create create a user and saves it to database unlike User.new
     visit '/'
-    User.new(username: 'robathan', password: 'test')
     fill_in :username, with: 'robathan'
     fill_in :password, with: 'test'
     click 'sign_in'
