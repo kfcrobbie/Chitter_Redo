@@ -13,9 +13,17 @@ feature 'User Sign Up' do
     visit '/'
     fill_in :username, with: 'robathan'
     fill_in :password, with: 'test'
-    click 'sign_in'
+    click_button 'Sign in'
     expect(page.status_code).to eq 200
     expect(page).to have_content("Welcome, robathan")
+  end
+
+  scenario 'A non-user cannot sign in' do
+    visit '/'
+     fill_in :username, with: 'jonabert'
+    fill_in :password, with: 'test'
+    click_button 'Sign in'
+    expect(page).to have_content("Unknown username or incorrect password")
   end
 
 end
