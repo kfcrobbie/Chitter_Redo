@@ -21,14 +21,55 @@ feature 'User Sign Up' do
   scenario 'A user can sign up ' do 
     visit '/' 
     click_button "Sign Up"
-    fill_in :username, with: 'Jonabert'
+    fill_in :name, with: 'Robathan Sagan'
     fill_in :email, with:'jonabert@example.com' 
+    fill_in :username, with: 'Jonabert'
     fill_in :password, with: 'oranges'
-    fill_in :password_confirmation. with:'oranges'
+    fill_in :password_confirmation, with:'oranges'
     click_button 'Sign Up'
     expect(page.status_code).to eq 200
-    expect(page).to have_content("Welcome to Chitter, Jonabert")
+    expect(page).to have_content("Welcome, Jonabert")
   end
+
+  scenario 'A user cannot sign up with an already registered username' do
+    visit '/'
+    click_button "Sign Up"
+    fill_in :name, with: 'Robathan Sagan'
+    fill_in :email, with:'jonabert@example.com' 
+    fill_in :username, with: 'Jonabert'
+    fill_in :password, with: 'oranges'
+    fill_in :password_confirmation, with:'oranges'
+    click_button 'Sign Up'
+    visit '/'
+    click_button "Sign Up"
+    fill_in :name, with: 'Robathan Sagan'
+    fill_in :email, with:'jonabert@example.com' 
+    fill_in :username, with: 'Jonabert'
+    fill_in :password, with: 'oranges'
+    fill_in :password_confirmation, with:'oranges'
+    click_button "Sign Up"
+    expect(page).to have_content("Username already registered!")
+  end
+
+scenario 'A user cannot sign up with an already registered email' do
+    visit '/'
+    click_button "Sign Up"
+    fill_in :name, with: 'Robathan Sagan'
+    fill_in :email, with:'jonabert@example.com' 
+    fill_in :username, with: 'Jonabert'
+    fill_in :password, with: 'oranges'
+    fill_in :password_confirmation, with:'oranges'
+    click_button 'Sign Up'
+    visit '/'
+    click_button "Sign Up"
+    fill_in :name, with: 'Robathan Sagan'
+    fill_in :email, with:'jonabert@example.com' 
+    fill_in :username, with: 'Jonabert'
+    fill_in :password, with: 'oranges'
+    fill_in :password_confirmation, with:'oranges'
+    click_button "Sign Up"
+    expect(page).to have_content("E-mail already registered!")
+end
   # scenario 'A non-user cannot sign in' do
   #   visit '/'
   #    fill_in :username, with: 'jonabert'
