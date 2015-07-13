@@ -1,8 +1,10 @@
 require 'sinatra/base'
+require 'sinatra/flash'
 
 class Chitter < Sinatra::Base
 
   enable :sessions
+  register Sinatra::Flash
   set :session_secret, 'super secret'
 
   get '/' do
@@ -16,7 +18,7 @@ class Chitter < Sinatra::Base
   end
 
   get '/user' do
-    "Success!"
+    @current_user = session[:user]
     erb :'users/user'
   end
 
@@ -34,10 +36,10 @@ class Chitter < Sinatra::Base
       @current_user = session[:user]
       redirect to('/user')
     else
-      @user.errors.each do |e|
-        puts e
-      end
-
+      flash.now[:notice] = "Password or Email already registered"
+      erb :'users/user' 
     end
+
+    erb :'users/user'
   end
 end
