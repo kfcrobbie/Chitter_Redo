@@ -38,7 +38,7 @@ feature 'User Sign Up' do
     fill_in :email, with:'jonabert@example.com' 
     fill_in :username, with: 'Jonabert'
     fill_in :password, with: 'oranges'
-    fill_in :password_confirmation, with:'oranges'
+   
     click_button 'Sign Up'
     visit '/'
     click_button "Sign Up"
@@ -46,7 +46,7 @@ feature 'User Sign Up' do
     fill_in :email, with:'jonabert@example.com' 
     fill_in :username, with: 'Jonabert'
     fill_in :password, with: 'oranges'
-    fill_in :password_confirmation, with:'oranges'
+    
     click_button "Sign Up"
     expect(page).to have_content("Username already registered!")
   end
