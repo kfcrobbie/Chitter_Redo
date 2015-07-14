@@ -52,13 +52,13 @@ feature 'User Sign Up' do
     expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
   end 
 
-  # scenario 'A non-user cannot sign in' do
-  #   visit '/'
-  #    fill_in :username, with: 'jonabert'
-  #   fill_in :password, with: 'test'
-  #   click_button 'Sign in'
-  #   expect(page).to have_content("Unknown username or incorrect password")
-  # end
+  scenario 'A non-user cannot sign in' do
+    visit '/'
+    fill_in :username, with: 'jonabert'
+    fill_in :password, with: 'test'
+    click_button 'Sign in'
+    expect(page).to have_content("Unknown username or incorrect password")
+  end
 
 end
 
