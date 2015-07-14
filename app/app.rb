@@ -38,9 +38,7 @@ class Chitter < Sinatra::Base
       redirect to('/user')
     else
       flash.now[:errors] = @user.errors.full_messages
-      erb :'users/user' 
+      erb :'users/sign_up'
     end
-
-    erb :'users/user'
   end
 end
