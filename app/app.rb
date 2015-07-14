@@ -12,14 +12,15 @@ class Chitter < Sinatra::Base
       @current_user = session[:user]
     end
     if params[:New_Peep]
-      @peep = params[:New_Peep]
+      @peep = Peep.create(message: params[:New_Peep], user_id: session[:user_id])
+      @display_peep = @peep.message
     end
     erb :'users/welcome_page'
   end
 
   post '/user' do
-    user = User.authenticate(params[:username], params[:password])
-    if user
+    @user = User.authenticate(params[:username], params[:password])
+    if @user
       session[:user] = params[:username]
       @current_user = session[:user]
       erb :'users/homepage'
@@ -46,6 +47,7 @@ class Chitter < Sinatra::Base
                         password_confirmation: params[:password_confirmation])
     if @user.save
       session[:user] = @user.username
+      session[:user_id] = @user.id
       redirect to('/')
     else
       flash.now[:errors] = @user.errors.full_messages

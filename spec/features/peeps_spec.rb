@@ -11,14 +11,14 @@ feature 'Peeps' do
     expect(page).to have_content "This is a test Peep"
   end
 
-  scenario 'a new peep is created when posted'
+  scenario 'a new peep is created when posted' do
     visit'/'
     click_button "Sign Up"
-    sign_up 
+    sign_up
     fill_in :New_Peep, with: "Jon is great"
+    click_button "Post Peep"
     expect(Peep.count).to eq(1)
   end
-
 
   def sign_up(name: 'Robathan Sagan',
               email: 'jonabert@example.com',

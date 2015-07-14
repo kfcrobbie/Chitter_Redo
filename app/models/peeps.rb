@@ -8,6 +8,6 @@ class Peep
   property :id, Serial
   property :message, String, required: true, message: 'Your Peep is blank!!'
 
-  belongs_to :user
+  belongs_to :user 
 
 end
