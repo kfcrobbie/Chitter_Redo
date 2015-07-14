@@ -8,7 +8,7 @@ feature 'Peeps' do
     sign_up
     fill_in :New_Peep, with: "This is a test Peep"
     click_button 'Post Peep'
-    expect_page.to have_content "This is a test Peep"
+    expect(page).to have_content "This is a test Peep"
   end
 
 

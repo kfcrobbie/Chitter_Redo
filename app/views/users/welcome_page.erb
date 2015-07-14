@@ -12,4 +12,14 @@ Not already a Chitter member? Sign up here:
 	<input type='submit' value='Sign Up'>
 </form>
 
+Enter a Peep: 
+<form action='/'>
+  <label>New_Peep:<input type="text" name="New_Peep">
+  <input type="submit" value="Post Peep">
+</form> 
+
+<p></p>
+<% if @peep %>
+  <%= @peep %>
+<% end %>
 </div>

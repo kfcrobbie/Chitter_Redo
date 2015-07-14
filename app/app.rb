@@ -11,6 +11,9 @@ class Chitter < Sinatra::Base
     if session[:user]
       @current_user = session[:user]
     end
+    if params[:New_Peep]
+      @peep = params[:New_Peep]
+    end
     erb :'users/welcome_page'
   end
 
