@@ -9,7 +9,7 @@ feature 'User Sign Up' do
 
 
   scenario 'A user can sign in' do
-    User.create(username: 'robathan', password: 'test', email: 'test@test', password_confirmation: 'test') #User.create create a user and saves it to database unlike User.new
+    User.create(username: 'robathan', name: 'rob', password: 'test', email: 'test@test', password_confirmation: 'test') #User.create create a user and saves it to database unlike User.new
     visit '/'
     fill_in :username, with: 'robathan'
     fill_in :password, with: 'test'
@@ -33,7 +33,7 @@ feature 'User Sign Up' do
     visit '/'
     click_button "Sign Up"
     sign_up
-    expect(page).to have_content("Username already registered")
+    expect(page).to have_content("Username is already taken")
   end
 
   scenario 'A user cannot sign up with an already registered email' do
@@ -43,7 +43,7 @@ feature 'User Sign Up' do
     visit '/'
     click_button "Sign Up"
     sign_up
-    expect(page).to have_content("Email already registered")
+    expect(page).to have_content("Email is already taken")
   end
 
   scenario 'Requires a matching password confirmation' do

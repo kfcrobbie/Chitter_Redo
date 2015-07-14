@@ -1,7 +1,7 @@
 describe User do
 
   it 'authenticates when given a valid email address and password' do
-  	user = User.create(username: 'jon', password: 'test', password_confirmation: 'test', email: 'anything') #
+  	user = User.create(username: 'jon', name: 'rob', password: 'test', password_confirmation: 'test', email: 'anything') #
     authenticated_user = User.authenticate(user.username, user.password)
     expect(authenticated_user).to eq user
   end
