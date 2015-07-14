@@ -8,6 +8,9 @@ class Chitter < Sinatra::Base
   set :session_secret, 'super secret'
 
   get '/' do
+    if session[:user]
+      @current_user = session[:user]
+    end
     erb :'users/welcome_page'
   end
 
@@ -19,7 +22,7 @@ class Chitter < Sinatra::Base
       erb :'users/homepage'
     else
       flash.now[:errors] = ['Unknown username or incorrect password']
-      erb :'users/welcome_page.erb'
+      erb :'users/welcome_page'
     end
   end
 
@@ -40,13 +43,19 @@ class Chitter < Sinatra::Base
                         password_confirmation: params[:password_confirmation])
     if @user.save
       session[:user] = @user.username
-      @current_user = session[:user]
-      redirect to('/user')
+      redirect to('/')
     else
       flash.now[:errors] = @user.errors.full_messages
       erb :'users/sign_up'
     end
   end
+
+  get '/user/delete' do 
+  if session[:user] 
+    session.delete(:user)
+  end
+  erb :'users/delete'
+  end  
 
   
 end

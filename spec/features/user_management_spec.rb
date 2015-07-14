@@ -9,7 +9,7 @@ feature 'User Sign Up' do
 
 
   scenario 'A user can sign in' do
-    User.create(username: 'robathan', password: 'test') #User.create create a user and saves it to database unlike User.new
+    User.create(username: 'robathan', password: 'test', email: 'test@test', password_confirmation: 'test') #User.create create a user and saves it to database unlike User.new
     visit '/'
     fill_in :username, with: 'robathan'
     fill_in :password, with: 'test'
@@ -59,6 +59,15 @@ feature 'User Sign Up' do
     click_button 'Sign in'
     expect(page).to have_content("Unknown username or incorrect password")
   end
+
+  scenario 'A user can sign out' do 
+    visit '/'
+    click_button "Sign Up"
+    sign_up
+    click_button "Sign Out"
+    expect(page).not_to have_content('Welcome Jonabert')
+    expect(page).to have_content('Thank you for signing out')
+  end   
 
 end
 

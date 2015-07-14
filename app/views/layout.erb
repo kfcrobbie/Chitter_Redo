@@ -16,6 +16,9 @@
 
   		<%if @current_user %>
   		Welcome, <%= @current_user %>
+      <form action='/user/delete'>
+        <input type='submit' value='Sign Out'>
+      </form>
   		<%end %>
   		<%= yield %>
 
